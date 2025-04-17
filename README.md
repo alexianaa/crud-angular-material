@@ -18,5 +18,7 @@ Uma vez que o servidor esteja rodando é possível acessar a interface web no li
 
 ## Funcionalidades
 
+Armazenamento em local storage
+
 1. Cadastrar
 2. Consultar
