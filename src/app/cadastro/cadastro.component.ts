@@ -95,6 +95,7 @@ export class CadastroComponent implements OnInit {
       this.service.salvar(this.cliente);
       this.cliente = Cliente.newCliente();
       this.mostrarMensagem("Salvo com sucesso");
+      this.router.navigate(['/consulta']);
     }else{
       this.service.atualizar(this.cliente);
       this.mostrarMensagem("Atualizado com sucesso");
