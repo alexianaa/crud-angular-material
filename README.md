@@ -1,5 +1,9 @@
 # CrudAngularMaterial
 
+![Home](./public/home.png)
+
+Baixe [aqui](./public/demo.mp4) um vídeo curto demonstrando a aplicação.
+
 Desenvolvido para realizar estudos sobre CRUD em angular
 
 Esse projeto foi desenvolvido utilizando [Angular CLI](https://github.com/angular/angular-cli) na versão 19.0.2.
