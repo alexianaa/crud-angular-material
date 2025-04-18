@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Cliente } from './Cliente';
 import { ClienteService } from '../cliente.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro',
@@ -25,10 +26,37 @@ import { ClienteService } from '../cliente.service';
 })
 export class CadastroComponent {
   cliente: Cliente = Cliente.newCliente();
+  atualizando: boolean = false;
 
-  constructor(private service: ClienteService){}
+  constructor(
+    private service: ClienteService,
+    private route: ActivatedRoute,
+    private router: Router
+  ){}
+
+  ngOnInit(): void{
+    this.route.queryParamMap.subscribe( (query: any) => {
+      const params = query['params'];
+      const id = params['id'];
+      if(id){
+        let clienteEncontrado = this.service.buscarClienteId(id);
+        if(clienteEncontrado){
+          this.atualizando = true;
+          this.cliente = clienteEncontrado;
+        }else{
+          this.cliente = Cliente.newCliente();
+        }
+      }
+    })
+  }
 
   salvar(){
-    this.service.salvar(this.cliente);
+    if(!this.atualizando){
+      this.service.salvar(this.cliente);
+      this.cliente = Cliente.newCliente();
+    }else{
+      this.service.atualizar(this.cliente);
+      this.router.navigate(['/consulta'])
+    }
   }
 }

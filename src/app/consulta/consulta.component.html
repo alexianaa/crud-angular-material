@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="center">
   <div fxLayout="column" fxFlex="1000px">
-    <form class="mt-60" #buscaFrm="ngForm">
+    <form class="mt-60" #buscaFrm="ngForm" (ngSubmit)="pesquisar()">
       <mat-card appearance="outlined">
         <mat-card-header>
           <mat-card-title>Consulta</mat-card-title>
@@ -10,7 +10,7 @@
             <div fxLayout="column" fxFlex="900px">
               <mat-form-field class="full-width">
                 <mat-label>Nome:</mat-label>
-                <input name="nome" type="text" placeholder="Ex.: Jose da Silva" matInput>
+                <input [(ngModel)]="nomeBusca" name="nomeBusca" type="text" placeholder="Ex.: Jose da Silva" matInput>
               </mat-form-field>
             </div>
           </div>
@@ -58,6 +58,26 @@
             <ng-container matColumnDef="dataNascimento">
               <th mat-header-cell *matHeaderCellDef> Data de nascimento </th>
               <td mat-cell *matCellDef="let cliente"> {{cliente.dataNascimento}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="editar">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let cliente">
+                <button type="button" mat-button (click)="preparaEditar(cliente.id)">
+                  <mat-icon fontIcon="edit"></mat-icon>
+                  Editar
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="excluir">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let cliente">
+                <button type="button" mat-button (click)="preparaExcluir(cliente.id)">
+                  <mat-icon fontIcon="delete"></mat-icon>
+                  Excluir
+                </button>
+              </td>
             </ng-container>
           
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
