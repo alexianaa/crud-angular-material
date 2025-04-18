@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="center">
-  <div fxLayout="column" fxFlex="1000px">
+  <div fxLayout="column" fxFlex="80%">
     <form class="mt-60" #buscaFrm="ngForm" (ngSubmit)="pesquisar()">
       <mat-card appearance="outlined">
         <mat-card-header>
@@ -27,7 +27,7 @@
 </div>
 
 <div fxLayout="row" fxLayoutAlign="center">
-  <div fxLayout="column" fxFlex="1000px">
+  <div fxLayout="column" fxFlex="80%">
     <form class="mt-20" #buscaFrm="ngForm">
       <mat-card appearance="outlined">
         <mat-card-header>
@@ -47,7 +47,7 @@
           
             <ng-container matColumnDef="cpf">
               <th mat-header-cell *matHeaderCellDef> CPF </th>
-              <td mat-cell *matCellDef="let cliente"> {{cliente.cpf}} </td>
+              <td mat-cell *matCellDef="let cliente"> {{cliente.cpf | mask: '000.000.000-00'}} </td>
             </ng-container>
           
             <ng-container matColumnDef="email">
@@ -57,7 +57,7 @@
           
             <ng-container matColumnDef="dataNascimento">
               <th mat-header-cell *matHeaderCellDef> Data de nascimento </th>
-              <td mat-cell *matCellDef="let cliente"> {{cliente.dataNascimento}} </td>
+              <td mat-cell *matCellDef="let cliente"> {{cliente.dataNascimento | mask: '00/00/0000'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="editar">

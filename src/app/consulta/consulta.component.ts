@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { Cliente } from '../cadastro/Cliente';
 import { ClienteService } from '../cliente.service';
+import { NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-consulta',
@@ -23,6 +24,10 @@ import { ClienteService } from '../cliente.service';
     MatTableModule,
     MatButtonModule,
     MatFormFieldModule,
+    NgxMaskPipe
+  ],
+  providers: [
+    provideNgxMask()
   ],
   templateUrl: './consulta.component.html',
   styleUrl: './consulta.component.scss'
