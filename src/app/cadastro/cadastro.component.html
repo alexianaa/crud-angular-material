@@ -10,8 +10,8 @@
           <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
             <div fxLayout="column" fxFlex="800px">
               <mat-form-field class="full-width">
-                <mat-label>Nome: *</mat-label>
-                <input [(ngModel)]="cliente.nome" name="nome" type="text" placeholder="Ex.: Jose da Silva" matInput>
+                <mat-label>Nome:</mat-label>
+                <input required [(ngModel)]="cliente.nome" name="nome" type="text" placeholder="Ex.: Jose da Silva" matInput>
               </mat-form-field>
             </div>
           </div>  
@@ -19,8 +19,8 @@
           <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
             <div fxLayout="column" fxFlex="800px">
               <mat-form-field class="full-width">
-                <mat-label>E-mail: *</mat-label>
-                <input [(ngModel)]="cliente.email" name="email" type="email" placeholder="Digte seu email" matInput>
+                <mat-label>E-mail:</mat-label>
+                <input required [(ngModel)]="cliente.email" name="email" type="email" placeholder="Digte seu email" matInput>
               </mat-form-field>
             </div>
           </div>
@@ -28,8 +28,8 @@
           <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
             <div fxLayout="column" fxFlex="400px">
               <mat-form-field class="full-width">
-                <mat-label>CPF: *</mat-label>
-                <input mask="000.000.000-00" [(ngModel)]="cliente.cpf" name="cpf" type="text" placeholder="Digte seu cpf" matInput>
+                <mat-label>CPF:</mat-label>
+                <input required mask="000.000.000-00" [(ngModel)]="cliente.cpf" name="cpf" type="text" placeholder="Digte seu cpf" matInput>
               </mat-form-field>
             </div>
           </div>
@@ -37,8 +37,30 @@
           <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
             <div fxLayout="column" fxFlex="400px">
               <mat-form-field class="full-width">
-                <mat-label>Data nascimento: *</mat-label>
-                <input mask="00/00/0000" [(ngModel)]="cliente.dataNascimento" name="dataNascimento" type="text" placeholder="Digte sua data de nascimento" matInput>
+                <mat-label>Data nascimento:</mat-label>
+                <input required mask="00/00/0000" [(ngModel)]="cliente.dataNascimento" name="dataNascimento" type="text" placeholder="Digte sua data de nascimento" matInput>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+            <div fxLayout="column" fxFlex="400px">
+              <mat-form-field class="full-width">
+                <mat-label>UF:</mat-label>
+                <mat-select required [(value)]="cliente.uf" (selectionChange)="carregarMunicipios($event)">
+                  <mat-option *ngFor="let uf of estados" [value]="uf.sigla"> {{ uf.sigla }} - {{ uf.nome }} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+            <div fxLayout="column" fxFlex="400px">
+              <mat-form-field class="full-width">
+                <mat-label>Município:</mat-label>
+                <mat-select required [(value)]="cliente.municipio" >
+                  <mat-option *ngFor="let m of municipios" [value]="m.nome"> {{ m.nome }} - {{ m.codigo_ibge }} </mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
           </div>
@@ -56,7 +78,7 @@
               Salvar
             </button>
           }
-          <button mat-flat-button color="accent" class="ml-5">
+          <button mat-flat-button color="accent" class="ml-5" type="button" (click)="limpar()">
             <mat-icon fontIcon="backspace" ></mat-icon>
             Limpar
           </button>

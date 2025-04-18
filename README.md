@@ -22,3 +22,7 @@ Armazenamento em local storage
 
 1. Cadastrar
 2. Consultar
+
+## API
+
+Consome dados da api [brasilapi](https://brasilapi.com.br/docs)

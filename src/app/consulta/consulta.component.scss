@@ -2,3 +2,16 @@
   justify-content: end;
   margin-bottom: 15px;
 }
+
+:host ::ng-deep .mat-mdc-card-content {
+  overflow-x: auto; 
+}
+
+:host ::ng-deep .mat-mdc-table {
+  width: 100%; 
+  min-width: fit-content;
+}
+
+:host ::ng-deep table {
+  width: 100%; 
+}

@@ -11,7 +11,11 @@ import { Cliente } from './Cliente';
 import { ClienteService } from '../cliente.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-
+import { BrasilapiService } from '../brasilapi.service';
+import { Estado, Municipio } from '../brasilapi.models';
+import { MatSelectModule, MatSelectChange } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
+ 
 @Component({
   selector: 'app-cadastro',
   imports: [
@@ -23,6 +27,8 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     MatIconModule,
     MatButtonModule,
     NgxMaskDirective,
+    MatSelectModule,
+    CommonModule,
   ],
   providers: [
     provideNgxMask(),
@@ -34,11 +40,14 @@ export class CadastroComponent implements OnInit {
   cliente: Cliente = Cliente.newCliente();
   atualizando: boolean = false;
   snack: MatSnackBar = inject(MatSnackBar);
+  estados: Estado[] = [];
+  municipios: Municipio[] = [];
 
   constructor(
     private service: ClienteService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private brasilApiService: BrasilapiService,
   ){}
 
   ngOnInit(): void{
@@ -50,14 +59,38 @@ export class CadastroComponent implements OnInit {
         if(clienteEncontrado){
           this.atualizando = true;
           this.cliente = clienteEncontrado;
+          if(this.cliente.uf){
+            const event = { value: this.cliente.uf };
+            this.carregarMunicipios(event as MatSelectChange);
+          }
         }else{
           this.cliente = Cliente.newCliente();
         }
       }
     })
+    this.carregarUFs();
+  }
+
+  limpar(){
+    this.cliente = Cliente.newCliente();
+  }
+
+  validacao(cliente: Cliente): boolean {
+    if(
+      cliente.nome === undefined ||
+      cliente.cpf === undefined ||
+      cliente.dataNascimento === undefined ||
+      cliente.email === undefined ||
+      cliente.municipio === undefined ||
+      cliente.uf === undefined
+    ) return false
+
+    return true
   }
 
   salvar(){
+    if(!this.validacao(this.cliente)) return this.mostrarMensagem("Todos os campos devem ser preenchidos");
+    
     if(!this.atualizando){
       this.service.salvar(this.cliente);
       this.cliente = Cliente.newCliente();
@@ -71,5 +104,20 @@ export class CadastroComponent implements OnInit {
 
   mostrarMensagem(mensagem: string){
     this.snack.open(mensagem, "Ok");
+  }
+
+  carregarUFs(){
+    this.brasilApiService.listarUFs().subscribe({
+      next: listaEstados => this.estados = listaEstados,
+      error: erro => console.log('ocorreu um erro: ', erro)
+    })
+  }
+
+  carregarMunicipios(event: MatSelectChange){
+    const ufSelecionada = event.value;
+    this.brasilApiService.listarMunicipios(ufSelecionada).subscribe({
+      next: listarMunicipios => this.municipios = listarMunicipios,
+      error: erro => console.log('ocorreu um erro: ', erro)
+    })
   }
 }
